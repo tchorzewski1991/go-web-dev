@@ -3,19 +3,20 @@ package main
 import "fmt"
 
 func main() {
-	str := `This string will be injected into the paragraph!`
+	injected := `This string will be injected into HTML paragraph`
 
-	tpl := `
+	template := `
 	<!DOCTYPE html>
 	<html lang="en">
 		<head>
 			<meta charset="UTF-8">
-			<title>Go web dev!</title>
+			<title>Go web dev</title>
 		</head>
 		<body>
-			<p>` + str + `</p>
+			<p>` + injected + `<p>
 		</body>
 	</html>
 	`
-	fmt.Println(tpl)
+
+	fmt.Println(template)
 }
