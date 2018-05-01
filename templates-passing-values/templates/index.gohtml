@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Go web dev!</title>
+    </head>
+    <body>
+        <ul>
+            {{ range .}}
+                <li>{{ .FullName }}, age: {{ .Age }}</li>
+            {{ end }}
+        </ul>
+    </body>
+</html>
