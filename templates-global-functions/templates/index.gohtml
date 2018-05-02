@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Go web dev!</title>
+    </head>
+    <body>
+
+        <!-- Worth to take a look on how and/or/not global functions
+             evaluates their arguments. Both .FullName and .IsAdmin are
+             arguments in case presented below. -->
+
+        {{ if and .FullName .IsAdmin }}
+            <h2>This should be visible because {{ .FullName }} is Admin!</h2>
+        {{ end }}
+    </body>
+</html>
