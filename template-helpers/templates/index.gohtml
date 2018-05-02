@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Go web dev!</title>
+    </head>
+    <body>
+
+        <!-- This is how we do pipelining in templates.
+             Basically this behavior is borrowed from UNIX
+             type systems where idea is to take result of
+             one function call as an argument for another
+             function call. -->
+
+        <h2>{{ capitalize .FullName }}, age: {{ .Age }}</h2>
+        <p> Job is: {{ .Job | downcase | capitalize }}</p>
+    </body>
+</html>
