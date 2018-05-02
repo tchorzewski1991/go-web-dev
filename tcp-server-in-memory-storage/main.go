@@ -11,25 +11,20 @@ import (
 
 func main() {
 	li, err := net.Listen("tcp", ":8080")
-
 	if err != nil { log.Fatalln(err) }
-
 	defer li.Close()
 
 	for {
 		conn, err := li.Accept()
-
 		if err != nil {
 			log.Fatalln(err)
 			continue
 		}
-
 		go handle(conn)
 	}
 }
 
 func handle(conn net.Conn) {
-
 	io.WriteString(conn, "\nIN-MEMORY STORAGE\n\n" +
 		"USE:          \n" +
 		"SET key value \n" +
@@ -61,7 +56,6 @@ func handle(conn net.Conn) {
 			} else {
 				logger(conn, "KEY NOT FOUND: %s \n", key)
 			}
-
 		case "SET":
 			if len(fields) != 3 {
 				fmt.Fprintln(conn, "INVALID FORMAT. USE: SET key value")
@@ -70,7 +64,6 @@ func handle(conn net.Conn) {
 
 			value := fields[2]
 			data[key] = value
-
 		case "DELETE":
 			if _, ok := data[key]; ok {
 				delete(data, key)
@@ -78,7 +71,6 @@ func handle(conn net.Conn) {
 			} else {
 				logger(conn, "KEY NOT FOUND: %s \n", key)
 			}
-
 		default:
 			logger(conn, "INVALID COMMAND: %s \n", command)
 		}
