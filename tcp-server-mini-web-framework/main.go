@@ -7,6 +7,7 @@ import (
 	"log"
 	"bufio"
 	"fmt"
+	"bytes"
 )
 
 var tpl *template.Template
@@ -65,4 +66,47 @@ func mux(conn net.Conn, ln string) {
 	if method == `GET` && url == `/about` {
 		about(conn)
 	}
+}
+
+func index(conn net.Conn) {
+	tpl = tpl.Lookup("index.gohtml")
+
+	var tplBuffer bytes.Buffer
+
+	if err := tpl.Execute(&tplBuffer, struct {
+		Home  bool
+		About bool
+	}{true, false }); err != nil {
+		log.Fatalln(err)
+	}
+
+	body := tplBuffer.String()
+
+	fmt.Fprint (conn, "HTTP/1.1 200 OK\r\n")
+	fmt.Fprintf(conn, "Content-Length: %d\r\n", len(body))
+	fmt.Fprint (conn, "Content-Type: text/html\r\n")
+	fmt.Fprint (conn, "\r\n")
+	fmt.Fprint (conn, body)
+
+}
+
+func about(conn net.Conn) {
+	tpl = tpl.Lookup("index.gohtml")
+
+	var tplBuffer bytes.Buffer
+
+	if err := tpl.Execute(&tplBuffer, struct {
+		Home  bool
+		About bool
+	}{false, true}); err != nil {
+		log.Fatalln(err)
+	}
+
+	body := tplBuffer.String()
+
+	fmt.Fprint (conn, "HTTP/1.1 200 OK\r\n")
+	fmt.Fprintf(conn, "Content-Length: %d\r\n", len(body))
+	fmt.Fprint (conn, "Content-Type: text/html\r\n")
+	fmt.Fprint (conn, "\r\n")
+	fmt.Fprint (conn, body)
 }
