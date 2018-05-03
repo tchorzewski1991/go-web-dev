@@ -5,6 +5,9 @@ import (
 	"strings"
 	"net"
 	"log"
+	"bufio"
+	"fmt"
+	"bytes"
 )
 
 var tpl *template.Template
@@ -27,4 +30,9 @@ func main() {
 		if err != nil { log.Fatalln(err) }
 		go handle(conn)
 	}
+}
+
+func handle(conn net.Conn) {
+	defer conn.Close()
+	request(conn)
 }
