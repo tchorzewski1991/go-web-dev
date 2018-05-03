@@ -53,3 +53,16 @@ func request(conn net.Conn) {
 		i++
 	}
 }
+
+func mux(conn net.Conn, ln string) {
+	fields := strings.Fields(ln)
+	method := fields[0]
+	url    := fields[1]
+
+	if method == `GET` && url == `/` {
+		index(conn)
+	}
+	if method == `GET` && url == `/about` {
+		about(conn)
+	}
+}
