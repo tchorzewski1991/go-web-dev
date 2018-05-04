@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Go web dev!</title>
+    </head>
+    <body>
+        {{if and .Params .Header}}
+        <main>
+            {{range $paramsKey, $paramsValues := .Params}}
+                <p><strong>{{$paramsKey}}</strong></p>
+                <ul>
+                {{range $paramsValues}}
+                    <li><em>{{.}}</em></li>
+                {{end}}
+                </ul>
+            {{end}}
+
+            {{range $headerKey, $headerValues := .Header}}
+                <p><strong>{{$headerKey}}</strong></p>
+                <ul>
+                    {{range $headerValues}}
+                        <li><em>{{.}}</em></li>
+                    {{end}}
+                </ul>
+            {{end}}
+        </main>
+        {{end}}
+
+        <form action="/" method="post">
+            <input type="text"
+                   name="name"
+                   placeholder="Type name ..."
+                   autofocus
+                   autocomplete="off">
+            <input type="submit">
+        </form>
+    </body>
+</html>
