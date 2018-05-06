@@ -29,6 +29,14 @@ func main() {
 	http.HandleFunc("/about", about)
 	http.HandleFunc("/home", home)
 
+	// We could achieve exactly the same behavior with http.Handle().
+	// However its implementation slightly differs from http.HandleFunc().
+	// Instead of providing function as an argument http.Handle() expects
+	// to provide anything that implements Handler interface. We need to
+	// make required type coercion first.
+	http.Handle("/about", http.HandlerFunc(about))
+	http.Handle("/home", http.HandlerFunc(home))
+
 	// When we provide nil as a handler for ListenAndServe() function
 	// Golang will use something called DefaultServeMux. ServeMux is an HTTP
 	// request multiplexer. It matches the URL of each incoming request
