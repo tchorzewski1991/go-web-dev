@@ -1,0 +1,7 @@
+This is simple text that will be loaded through form submission.
+The main point of this exercise is to practise how reading from file
+actually works. Knowledge presented in this exercise is important
+especially when we are web developers. Working with files refers to
+common, daily routine for web developers.
+What we will try to achieve is to count occurrences of all words within
+this text.
