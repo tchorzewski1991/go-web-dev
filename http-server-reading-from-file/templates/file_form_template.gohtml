@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Go web dev!</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <h3>Hello from simple text file reprocessing!</h3>
+        <form method="POST" enctype="multipart/form-data">
+            <input type="file" name="f">
+            <input type="submit" value="Upload">
+        </form>
+
+        {{ if . }}
+            {{ range $word, $count := . }}
+                {{$word}} : {{$count}}<br>
+            {{ end }}
+        {{ end }}
+    </body>
+</html>
