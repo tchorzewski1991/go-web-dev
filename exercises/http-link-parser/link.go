@@ -69,3 +69,20 @@ func findText(n *html.Node) string {
 
 	return ret
 }
+
+// buildLink() function will extract value of href attribute
+// and all texts from link node and will return Link struct.
+func buildLink(n *html.Node) Link {
+	var ret Link
+
+	for _, attr := range n.Attr {
+		if attr.Key == "href" {
+			ret.Href = attr.Val
+			break
+		}
+	}
+
+	ret.Text = findText(n)
+
+	return  ret
+}
