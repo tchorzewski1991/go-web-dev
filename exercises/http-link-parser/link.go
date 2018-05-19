@@ -31,3 +31,20 @@ func Parse(r io.Reader) ([]Link, error) {
 
 	return links, nil
 }
+
+// findLinks() function will take parsed HTML and will
+// use Depth First Search (DFS) algorithm to find and return
+// slice of all link nodes.
+func findLinks(n *html.Node) []*html.Node {
+	if n.Type == html.ElementNode && n.Data == "a" {
+		return []*html.Node{n}
+	}
+
+	var ret []*html.Node
+
+	for c := n.FirstChild; c != nil; c = c.NextSibling {
+		ret = append(ret, findLinks(c)...)
+	}
+
+	return ret
+}
