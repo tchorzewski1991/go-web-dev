@@ -48,3 +48,24 @@ func findLinks(n *html.Node) []*html.Node {
 
 	return ret
 }
+
+// findText() function will take parsed link node and will
+// use Depth First Search (DFS) algorithm to find and return
+// string with all texts from link node.
+func findText(n *html.Node) string {
+	var ret string
+
+	if n.Type == html.TextNode {
+		return n.Data
+	}
+
+	if n.Type != html.ElementNode {
+		return ""
+	}
+
+	for c := n.FirstChild; c != nil; c = c.NextSibling {
+		ret += findText(c) + " "
+	}
+
+	return ret
+}
