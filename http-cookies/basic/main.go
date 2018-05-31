@@ -13,10 +13,10 @@ func main() {
 	http.ListenAndServe(":8080", nil)
 }
 
-// Notice permanent redirection with usage of headers
-// location value. Nice fact about HTTP 301 MovedPermanently
-// status is fact, that it will be cached by browser to prevent
-// from additional requests to the application server.
+// Notice permanent redirection by setting up 'Location' header.
+// Nice fact about HTTP 301 MovedPermanently status is that it
+// will be cached by browser. This behavior prevent from any
+// next request to the application server.
 func root(w http.ResponseWriter, _ *http.Request) {
 	w.Header().Set("Location", "/read")
 	w.WriteHeader(http.StatusMovedPermanently)
