@@ -6,18 +6,19 @@ import (
 	"github.com/satori/go.uuid"
 	"fmt"
 	"errors"
+	"golang.org/x/crypto/bcrypt"
 )
 
 var tpl *template.Template
 
 type User struct {
 	Email    string
-	Password string
+	Password []byte
 }
 
-var mockSID, _   = uuid.NewV4()
-var mockEmail    = "test@email.com"
-var mockPassword = "password"
+var mockSID, _      = uuid.NewV4()
+var mockEmail       = "test@email.com"
+var mockPassword, _ = bcrypt.GenerateFromPassword([]byte("password"), bcrypt.MinCost)
 
 type dbSessions map[string]string
 var  sessions = dbSessions{}
@@ -32,7 +33,7 @@ func (dbU dbUsers) NotFound() error {
 }
 
 func mockUser() {
-	users[mockEmail] = User{ Email: mockEmail, Password: mockPassword}
+	users[mockEmail] = User{Email: mockEmail, Password: mockPassword}
 }
 
 func mockSession() {
@@ -84,6 +85,18 @@ func login(w http.ResponseWriter, req *http.Request) {
 
 	if req.Method == http.MethodPost {
 		eml := req.FormValue("email")
+		pwd := req.FormValue("password")
+
+		u, ok := users[eml]
+		if !ok {
+			http.Error(w, "User do not match", http.StatusNotFound)
+			return
+		}
+
+		err := bcrypt.CompareHashAndPassword(u.Password, []byte(pwd))
+		if err != nil {
+			http.Error(w, "Password do not match", http.StatusForbidden)
+		}
 
 		sID, _ := uuid.NewV4()
 
